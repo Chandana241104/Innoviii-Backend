@@ -9,11 +9,7 @@
     "vercel-build": "npm install"
   },
   "dependencies": {
-<<<<<<< HEAD
     "bcryptjs": "^3.0.3",
-=======
-    "bcryptjs":"^2.4.3",
->>>>>>> 87168043806922cc13ec0f505f67f882be5e98c3
     "cors": "^2.8.5",
     "csv-writer": "^1.6.0",
     "dotenv": "^16.0.3",
