@@ -1,0 +1,17 @@
+# Create .gitignore for backend (run these commands ONE BY ONE):
+echo node_modules/ > .gitignore
+echo .env >> .gitignore
+echo .env.local >> .gitignore
+echo .env.production >> .gitignore
+echo npm-debug.log* >> .gitignore
+echo yarn-debug.log* >> .gitignore
+echo yarn-error.log* >> .gitignore
+echo .DS_Store >> .gitignore
+echo .vscode/ >> .gitignore
+echo .idea/ >> .gitignore
+echo *.log >> .gitignore
+echo logs/ >> .gitignore
+echo coverage/ >> .gitignore
+echo .nyc_output/ >> .gitignore
+echo dist/ >> .gitignore
+echo build/ >> .gitignore
