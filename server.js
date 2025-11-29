@@ -18,19 +18,7 @@ const errorHandler = require('./middlewares/errorHandler');
 
 const app = express();
 
-// Connect to database
-connectDB();
-
-// Database connection events
-mongoose.connection.on('connected', () => {
-  console.log('✅ MongoDB connected successfully');
-});
-
-mongoose.connection.on('error', (err) => {
-  console.error('❌ MongoDB connection error:', err);
-});
-
-// Middleware
+// Middleware - ADD THIS BEFORE DB CONNECTION
 app.use(helmet());
 app.use(morgan('dev'));
 app.use(express.json({ limit: '10mb' }));
@@ -50,7 +38,24 @@ const limiter = rateLimit({
 });
 app.use(limiter);
 
-// ✅ ADD THIS ROOT ROUTE
+// Connect to database with error handling
+try {
+  connectDB();
+} catch (error) {
+  console.error('Database connection failed:', error.message);
+  // Don't crash the server, just log the error
+}
+
+// Database connection events
+mongoose.connection.on('connected', () => {
+  console.log('✅ MongoDB connected successfully');
+});
+
+mongoose.connection.on('error', (err) => {
+  console.error('❌ MongoDB connection error:', err.message);
+});
+
+// Root route
 app.get('/', (req, res) => {
   res.status(200).json({
     success: true,
