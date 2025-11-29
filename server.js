@@ -68,6 +68,11 @@ app.use('*', (req, res) => {
 // Error handling middleware (should be last)
 app.use(errorHandler);
 
+if (process.env.NODE_ENV === 'production') {
+  // Export for Vercel serverless
+  module.exports = app;
+}
+ else{
 const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, () => {
@@ -75,3 +80,4 @@ app.listen(PORT, () => {
   console.log(`📊 Environment: ${process.env.NODE_ENV || 'development'}`);
   console.log(`🌐 CORS Origin: ${process.env.CORS_ORIGIN || 'http://localhost:3000'}`);
 });
+ }
