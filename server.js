@@ -13,7 +13,6 @@ const testRoutes = require('./routes/tests');
 const submissionRoutes = require('./routes/submissions');
 const adminRoutes = require('./routes/admin');
 
-
 // Import middleware
 const errorHandler = require('./middlewares/errorHandler');
 
@@ -41,6 +40,24 @@ const limiter = rateLimit({
   message: 'Too many requests from this IP, please try again later.'
 });
 app.use(limiter);
+
+// Root route - ADD THIS SECTION
+app.get('/', (req, res) => {
+  res.status(200).json({
+    success: true,
+    message: 'Innoviii Backend API is running successfully! 🚀',
+    version: '1.0.0',
+    timestamp: new Date().toISOString(),
+    documentation: 'Use /api/ endpoints to access the API',
+    endpoints: {
+      health: '/api/health',
+      tests: '/api/tests',
+      auth: '/api/auth',
+      admin: '/api/admin',
+      submissions: '/api/submissions'
+    }
+  });
+});
 
 // Routes
 app.use('/api/auth', authRoutes);
@@ -71,13 +88,11 @@ app.use(errorHandler);
 if (process.env.NODE_ENV === 'production') {
   // Export for Vercel serverless
   module.exports = app;
+} else {
+  const PORT = process.env.PORT || 5000;
+  app.listen(PORT, () => {
+    console.log(`🚀 Server running on port ${PORT}`);
+    console.log(`📊 Environment: ${process.env.NODE_ENV || 'development'}`);
+    console.log(`🌐 CORS Origin: ${process.env.CORS_ORIGIN || 'http://localhost:3000'}`);
+  });
 }
- else{
-const PORT = process.env.PORT || 5000;
-
-app.listen(PORT, () => {
-  console.log(`🚀 Server running on port ${PORT}`);
-  console.log(`📊 Environment: ${process.env.NODE_ENV || 'development'}`);
-  console.log(`🌐 CORS Origin: ${process.env.CORS_ORIGIN || 'http://localhost:3000'}`);
-});
- }
